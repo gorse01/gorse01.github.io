@@ -1,9 +1,673 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palantir Deployment Strategist Interview Simulator</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1b1f2a;
+      --muted: #5f6b7a;
+      --accent: #2f6fed;
+      --accent-soft: #e5eeff;
+      --border: #d7dde6;
+      --success: #1c7f5a;
+    }
 
+    * {
+      box-sizing: border-box;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      padding: 32px 16px 16px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0 auto;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto 48px;
+      padding: 0 16px 32px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+      border: 1px solid var(--border);
+    }
+
+    .settings-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .hint {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .toggle input {
+      width: 18px;
+      height: 18px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 600;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 8px 18px rgba(47, 111, 237, 0.25);
+    }
+
+    button.secondary {
+      background: var(--accent-soft);
+      color: var(--accent);
+      box-shadow: none;
+      border: 1px solid var(--accent);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-weight: 600;
+    }
+
+    .pill {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .feedback {
+      border-left: 4px solid var(--success);
+      background: #f0faf6;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .feedback h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .feedback ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .status {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .question-list li {
+      line-height: 1.4;
+    }
+  </style>
+</head>
 <body>
-  <h1>gorse01 welcomes you</h1>
-  <p>haiii and welcome to my website uwu</p>
-  <img src="https://content.codecademy.com/articles/github-pages-via-web-app/happy-ice-cream.gif" />
-</body>
+  <header>
+    <h1>Palantir Deployment Strategist Interview Simulator</h1>
+    <p>
+      Practice a continuous mix of behavioral, mini-decomposition, and Thiel-esque curveball questions.
+      Answer each prompt in turn and get feedback every five questions plus a full summary at the end.
+    </p>
+  </header>
 
+  <main>
+    <section class="card">
+      <h2>Simulator setup</h2>
+      <div class="settings-grid">
+        <div>
+          <label for="questionCount">Total questions</label>
+          <input id="questionCount" type="number" min="5" max="30" value="15" />
+          <div class="hint">Every 5 questions you will receive feedback.</div>
+        </div>
+        <div>
+          <label for="mixStyle">Mixing strategy</label>
+          <select id="mixStyle">
+            <option value="balanced" selected>Balanced (behavioral → decomposition → curveball)</option>
+            <option value="behavioral-heavy">Behavioral-heavy</option>
+            <option value="decomposition-heavy">Decomposition-heavy</option>
+            <option value="curveball-heavy">Curveball-heavy</option>
+          </select>
+          <div class="hint">Ensures a consistent mix across the session.</div>
+        </div>
+        <div>
+          <label for="model">LLM model name (optional)</label>
+          <input id="model" type="text" placeholder="gpt-4o-mini" />
+          <div class="hint">Used only if you enable LLM generation.</div>
+        </div>
+      </div>
+      <div class="settings-grid" style="margin-top: 16px;">
+        <div>
+          <label for="endpoint">LLM API endpoint (optional)</label>
+          <input id="endpoint" type="text" placeholder="https://api.openai.com/v1/chat/completions" />
+          <div class="hint">Uses an OpenAI-compatible chat completion endpoint.</div>
+        </div>
+        <div>
+          <label for="apiKey">API key (optional)</label>
+          <input id="apiKey" type="text" placeholder="sk-..." />
+          <div class="hint">Stored only in your browser session.</div>
+        </div>
+      </div>
+      <div class="toggle" style="margin-top: 16px;">
+        <input id="useLLM" type="checkbox" />
+        <label for="useLLM">Generate new questions with an LLM using the Glassdoor samples</label>
+      </div>
+      <div class="button-row">
+        <button id="startBtn">Start simulation</button>
+        <button id="resetBtn" class="secondary" disabled>Reset</button>
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <section id="interviewCard" class="card hidden">
+      <div class="progress">
+        <span id="progressText">Question 1 of 15</span>
+        <span id="categoryPill" class="pill">Behavioral</span>
+      </div>
+      <div id="questionText" class="question"></div>
+      <label for="answer">Your response</label>
+      <textarea id="answer" placeholder="Type your response here..."></textarea>
+      <div class="button-row">
+        <button id="nextBtn">Next question</button>
+        <button id="saveBtn" class="secondary">Save answer</button>
+      </div>
+      <div id="checkpointFeedback" class="feedback hidden"></div>
+    </section>
+
+    <section id="summaryCard" class="card hidden">
+      <h2>End-of-session feedback</h2>
+      <div id="summaryFeedback" class="feedback"></div>
+      <h3>Questions asked</h3>
+      <ol id="questionReview" class="question-list"></ol>
+    </section>
+  </main>
+
+  <script>
+    const SAMPLE_QUESTIONS = [
+      { type: "decomposition", text: "You're trying to identify the degree to which bribery goes unreported in a LATAM country. How would you narrow down on this?" },
+      { type: "behavioral", text: "What was the data point that you focused on for the success of your project?" },
+      { type: "decomposition", text: "Describe how you would create a recommendation system for a music streaming platform." },
+      { type: "behavioral", text: "Tell me about a time you failed." },
+      { type: "decomposition", text: "Explain how you would use data to manage a natural disaster in a major city." },
+      { type: "behavioral", text: "Tell me about a project where you had to use data to succeed." },
+      { type: "behavioral", text: "Provide an example of a time where you had to make a decision using data." },
+      { type: "decomposition", text: "Design a solution for a ride-sharing company to decrease driver waiting time." },
+      { type: "curveball", text: "Share three snapshots of your life that tell us what formed your personality and what drives you." },
+      { type: "curveball", text: "What is a contrarian belief you have?" },
+      { type: "behavioral", text: "Tell me about a time you worked with someone you disliked." },
+      { type: "behavioral", text: "Name a time you have come into conflict with a colleague." },
+      { type: "behavioral", text: "What was one thing you are proud of and one thing you are not proud of in your career?" },
+      { type: "decomposition", text: "Case study: You need to understand the fentanyl crisis in America. How would you approach the data and stakeholders?" },
+      { type: "decomposition", text: "How do you detect illegal firearms in postal packages?" },
+      { type: "behavioral", text: "What would be a reason the company decides to transfer you to another department?" },
+      { type: "behavioral", text: "Where exactly do you see yourself as a Deployment Strategist?" },
+      { type: "behavioral", text: "What role do you envision yourself playing as a Deployment Strategist?" },
+      { type: "decomposition", text: "Think through a data strategy for a direct-to-consumer mobility company." },
+      { type: "decomposition", text: "You are working for the IRS and have to identify fraudulent tax activity. How would you build a model to identify fraud?" },
+      { type: "behavioral", text: "Walk me through the most analytical/technical/data-heavy project you've worked on." },
+      { type: "behavioral", text: "What problem would you like to solve using data?" },
+      { type: "behavioral", text: "What would your boss say if you quit?" },
+      { type: "curveball", text: "Tell me something about you that's not in the CV." },
+      { type: "curveball", text: "What's one thing you believe in that most people disagree with you on?" },
+      { type: "decomposition", text: "Given made-up data tables, how would you decide where to increase/decrease capacity in the NY subway system?" },
+      { type: "decomposition", text: "Open-ended: How would you predict the number of gas stations in the states?" },
+      { type: "behavioral", text: "Name someone it was difficult to work with but that you would choose to work with again." },
+      { type: "behavioral", text: "Explain what you know about Palantir and the role." },
+      { type: "decomposition", text: "SQL-like prompt: how would you use group by/aggregate/merge to answer a business question?" },
+      { type: "behavioral", text: "How do you persuade critical stakeholders?" },
+      { type: "decomposition", text: "How would you detect doctors who prescribe fraudulent opioid drugs?" },
+      { type: "behavioral", text: "Tell me about a time when you have dealt with ambiguity." },
+      { type: "curveball", text: "If you could have all the data in the world, what data would you want and what problem would you solve?" },
+      { type: "decomposition", text: "How could Palantir improve the response time of the London NHS ambulance service?" },
+      { type: "curveball", text: "What is the biggest problem in the world and how would you solve it?" },
+      { type: "curveball", text: "How would you convince Facebook and Barclays to share their data?" },
+      { type: "curveball", text: "If you got $1M to invest, what project would you invest in?" },
+      { type: "curveball", text: "What is your superpower? What is your kryptonite?" },
+      { type: "behavioral", text: "How do you deal with professional conflict and failure?" },
+      { type: "behavioral", text: "What is your greatest accomplishment? Why do you want to work at Palantir?" },
+      { type: "decomposition", text: "Business case: London is flooded and an emergency state has been declared. You are working with the mayor—what would you do?" }
+    ];
+
+    const QUESTION_TYPES = ["behavioral", "decomposition", "curveball"];
+    const TYPE_LABELS = {
+      behavioral: "Behavioral",
+      decomposition: "Mini-decomposition",
+      curveball: "Curveball"
+    };
+
+    const state = {
+      questions: [],
+      answers: [],
+      currentIndex: 0,
+      checkpoints: []
+    };
+
+    const elements = {
+      questionCount: document.getElementById("questionCount"),
+      mixStyle: document.getElementById("mixStyle"),
+      model: document.getElementById("model"),
+      endpoint: document.getElementById("endpoint"),
+      apiKey: document.getElementById("apiKey"),
+      useLLM: document.getElementById("useLLM"),
+      startBtn: document.getElementById("startBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      status: document.getElementById("status"),
+      interviewCard: document.getElementById("interviewCard"),
+      summaryCard: document.getElementById("summaryCard"),
+      progressText: document.getElementById("progressText"),
+      categoryPill: document.getElementById("categoryPill"),
+      questionText: document.getElementById("questionText"),
+      answer: document.getElementById("answer"),
+      nextBtn: document.getElementById("nextBtn"),
+      saveBtn: document.getElementById("saveBtn"),
+      checkpointFeedback: document.getElementById("checkpointFeedback"),
+      summaryFeedback: document.getElementById("summaryFeedback"),
+      questionReview: document.getElementById("questionReview")
+    };
+
+    const shuffle = (array) => {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    };
+
+    const getMixPattern = (style) => {
+      switch (style) {
+        case "behavioral-heavy":
+          return ["behavioral", "behavioral", "decomposition", "behavioral", "curveball"]; 
+        case "decomposition-heavy":
+          return ["decomposition", "behavioral", "decomposition", "curveball", "decomposition"]; 
+        case "curveball-heavy":
+          return ["curveball", "behavioral", "decomposition", "curveball", "behavioral"]; 
+        default:
+          return ["behavioral", "decomposition", "curveball"];
+      }
+    };
+
+    const buildSession = (count, style) => {
+      const buckets = {
+        behavioral: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "behavioral")),
+        decomposition: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "decomposition")),
+        curveball: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "curveball"))
+      };
+
+      const pattern = getMixPattern(style);
+      const session = [];
+      let patternIndex = 0;
+
+      while (session.length < count) {
+        const type = pattern[patternIndex % pattern.length];
+        const pool = buckets[type];
+        if (pool.length === 0) {
+          const fallbackType = QUESTION_TYPES.find((t) => buckets[t].length > 0);
+          if (!fallbackType) break;
+          session.push(buckets[fallbackType].shift());
+        } else {
+          session.push(pool.shift());
+        }
+        patternIndex += 1;
+      }
+      return session;
+    };
+
+    const createPrompt = (count) => {
+      return `You are generating interview questions for a Palantir Deployment Strategist simulator.\n\n` +
+        `Use the provided sample questions as inspiration. Return ${count} questions in strict JSON format: ` +
+        `[{"type":"behavioral|decomposition|curveball","text":"..."}].\n` +
+        `Constraints:\n- Mix the question types evenly.\n- Keep each question concise and interview-ready.\n- Stay within Palantir DS themes: data strategy, ambiguity, stakeholder management, and curveball personality checks.\n` +
+        `Samples:\n${SAMPLE_QUESTIONS.map((q) => `- (${q.type}) ${q.text}`).join("\n")}`;
+    };
+
+    const extractJsonArray = (rawText) => {
+      if (!rawText) return [];
+      try {
+        return JSON.parse(rawText);
+      } catch (error) {
+        const start = rawText.indexOf("[");
+        const end = rawText.lastIndexOf("]");
+        if (start === -1 || end === -1 || end <= start) {
+          throw new Error("LLM response did not include a JSON array.");
+        }
+        const slice = rawText.slice(start, end + 1);
+        return JSON.parse(slice);
+      }
+    };
+
+    const normalizeQuestions = (items) => {
+      if (!Array.isArray(items)) return [];
+      const seen = new Set();
+      return items
+        .map((item) => ({
+          type: typeof item?.type === "string" ? item.type.toLowerCase() : "",
+          text: typeof item?.text === "string" ? item.text.trim() : ""
+        }))
+        .filter((item) => QUESTION_TYPES.includes(item.type) && item.text.length > 0)
+        .map((item) => ({
+          ...item,
+          text: item.text.replace(/\s+/g, " ").slice(0, 220)
+        }))
+        .filter((item) => {
+          const key = item.text.toLowerCase();
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+    };
+
+    const mergeQuestions = (primaryQuestions, count, style) => {
+      const llmBuckets = {
+        behavioral: shuffle(primaryQuestions.filter((q) => q.type === "behavioral")),
+        decomposition: shuffle(primaryQuestions.filter((q) => q.type === "decomposition")),
+        curveball: shuffle(primaryQuestions.filter((q) => q.type === "curveball"))
+      };
+      const fallbackBuckets = {
+        behavioral: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "behavioral")),
+        decomposition: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "decomposition")),
+        curveball: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "curveball"))
+      };
+      const pattern = getMixPattern(style);
+      const session = [];
+      let patternIndex = 0;
+
+      while (session.length < count) {
+        const type = pattern[patternIndex % pattern.length];
+        const pool = llmBuckets[type].length ? llmBuckets[type] : fallbackBuckets[type];
+        if (pool.length === 0) {
+          const fallbackType = QUESTION_TYPES.find(
+            (t) => llmBuckets[t].length > 0 || fallbackBuckets[t].length > 0
+          );
+          if (!fallbackType) break;
+          const fallbackPool = llmBuckets[fallbackType].length
+            ? llmBuckets[fallbackType]
+            : fallbackBuckets[fallbackType];
+          session.push(fallbackPool.shift());
+        } else {
+          session.push(pool.shift());
+        }
+        patternIndex += 1;
+      }
+      return session;
+    };
+
+    const callLLM = async (count) => {
+      const endpoint = elements.endpoint.value.trim();
+      const apiKey = elements.apiKey.value.trim();
+      const model = elements.model.value.trim() || "gpt-4o-mini";
+
+      if (!endpoint || !apiKey) {
+        throw new Error("LLM endpoint and API key are required.");
+      }
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: "system", content: "You are a precise interview-question generator." },
+            { role: "user", content: createPrompt(count) }
+          ],
+          temperature: 0.8
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`LLM request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content;
+      const parsed = extractJsonArray(content);
+      return normalizeQuestions(parsed);
+    };
+
+    const scoreAnswer = (answer) => {
+      const wordCount = answer.trim().split(/\s+/).filter(Boolean).length;
+      const includesMetric = /metric|kpi|measure|quantify|data|signal/i.test(answer);
+      const includesStructure = /situation|task|action|result|impact|tradeoff|assumption/i.test(answer);
+      return {
+        wordCount,
+        includesMetric,
+        includesStructure
+      };
+    };
+
+    const buildFeedback = (answersSlice) => {
+      const stats = answersSlice.map(scoreAnswer);
+      const averageWords = Math.round(stats.reduce((acc, s) => acc + s.wordCount, 0) / stats.length || 0);
+      const metricsCount = stats.filter((s) => s.includesMetric).length;
+      const structureCount = stats.filter((s) => s.includesStructure).length;
+
+      const feedback = [];
+      feedback.push(`Average response length: ${averageWords} words.`);
+
+      if (metricsCount >= Math.ceil(stats.length / 2)) {
+        feedback.push("Good use of metrics and data language. Keep highlighting concrete signals.");
+      } else {
+        feedback.push("Add a clear metric, KPI, or signal in more answers to show data-driven thinking.");
+      }
+
+      if (structureCount >= Math.ceil(stats.length / 2)) {
+        feedback.push("Strong structure. Continue to frame responses with assumptions, trade-offs, or STAR elements.");
+      } else {
+        feedback.push("Try anchoring answers in a clear structure (Situation → Task → Action → Result). Add assumptions/trade-offs.");
+      }
+
+      feedback.push("Remember to clarify stakeholders and decision criteria in decomposition questions.");
+
+      return feedback;
+    };
+
+    const renderQuestion = () => {
+      const current = state.questions[state.currentIndex];
+      if (!current) return;
+      elements.progressText.textContent = `Question ${state.currentIndex + 1} of ${state.questions.length}`;
+      elements.categoryPill.textContent = TYPE_LABELS[current.type];
+      elements.questionText.textContent = current.text;
+      elements.answer.value = state.answers[state.currentIndex] || "";
+    };
+
+    const showCheckpointFeedback = () => {
+      const checkpointStart = state.currentIndex - 4;
+      const answersSlice = state.answers.slice(checkpointStart, state.currentIndex + 1);
+      const feedback = buildFeedback(answersSlice);
+      elements.checkpointFeedback.innerHTML = `
+        <h3>Checkpoint feedback</h3>
+        <ul>${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>
+      `;
+      elements.checkpointFeedback.classList.remove("hidden");
+    };
+
+    const renderSummary = () => {
+      const feedback = buildFeedback(state.answers);
+      elements.summaryFeedback.innerHTML = `
+        <h3>Overall feedback</h3>
+        <ul>${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>
+      `;
+
+      elements.questionReview.innerHTML = state.questions
+        .map((q, idx) => `<li><strong>${TYPE_LABELS[q.type]}:</strong> ${q.text}<br /><em>Your answer:</em> ${state.answers[idx] || "(no response)"}</li>`)
+        .join("");
+    };
+
+    const startSession = async () => {
+      const count = Math.max(5, Math.min(30, Number(elements.questionCount.value) || 15));
+      elements.status.textContent = "";
+      elements.startBtn.disabled = true;
+      elements.resetBtn.disabled = false;
+      elements.checkpointFeedback.classList.add("hidden");
+      elements.summaryCard.classList.add("hidden");
+
+      try {
+        if (elements.useLLM.checked) {
+          elements.status.textContent = "Generating questions with LLM...";
+          const generated = await callLLM(count);
+          state.questions = mergeQuestions(generated, count, elements.mixStyle.value);
+          elements.status.textContent = `LLM questions generated (${generated.length} vetted).`;
+        } else {
+          state.questions = buildSession(count, elements.mixStyle.value);
+        }
+      } catch (error) {
+        elements.status.textContent = `LLM generation failed: ${error.message}. Falling back to sample set.`;
+        state.questions = buildSession(count, elements.mixStyle.value);
+      }
+
+      state.answers = new Array(state.questions.length).fill("");
+      state.currentIndex = 0;
+      elements.interviewCard.classList.remove("hidden");
+      renderQuestion();
+    };
+
+    const saveAnswer = () => {
+      state.answers[state.currentIndex] = elements.answer.value.trim();
+    };
+
+    const nextQuestion = () => {
+      saveAnswer();
+      elements.checkpointFeedback.classList.add("hidden");
+
+      if ((state.currentIndex + 1) % 5 === 0) {
+        showCheckpointFeedback();
+      }
+
+      if (state.currentIndex + 1 >= state.questions.length) {
+        elements.interviewCard.classList.add("hidden");
+        renderSummary();
+        elements.summaryCard.classList.remove("hidden");
+        elements.startBtn.disabled = false;
+        return;
+      }
+
+      state.currentIndex += 1;
+      renderQuestion();
+    };
+
+    const resetSession = () => {
+      state.questions = [];
+      state.answers = [];
+      state.currentIndex = 0;
+      elements.interviewCard.classList.add("hidden");
+      elements.summaryCard.classList.add("hidden");
+      elements.checkpointFeedback.classList.add("hidden");
+      elements.status.textContent = "";
+      elements.answer.value = "";
+      elements.startBtn.disabled = false;
+      elements.resetBtn.disabled = true;
+    };
+
+    elements.startBtn.addEventListener("click", startSession);
+    elements.resetBtn.addEventListener("click", resetSession);
+    elements.saveBtn.addEventListener("click", saveAnswer);
+    elements.nextBtn.addEventListener("click", nextQuestion);
+  </script>
+</body>
 </html>
