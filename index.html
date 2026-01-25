@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Palantir Deployment Strategist Interview Simulator</title>
+  <title>Contemporary Classical Explorer</title>
   <style>
     :root {
       color-scheme: light;
-      --bg: #f6f7fb;
+      --bg: #f5f4f2;
       --card: #ffffff;
-      --text: #1b1f2a;
-      --muted: #5f6b7a;
-      --accent: #2f6fed;
-      --accent-soft: #e5eeff;
-      --border: #d7dde6;
-      --success: #1c7f5a;
+      --text: #1f1f1f;
+      --muted: #5b5b5b;
+      --accent: #2d6cdf;
+      --accent-soft: #e8effb;
+      --border: #d8d8d8;
     }
 
     * {
@@ -29,27 +28,26 @@
     }
 
     header {
-      padding: 32px 16px 16px;
+      padding: 48px 16px 24px;
       text-align: center;
     }
 
     header h1 {
-      margin: 0 0 8px;
-      font-size: 2rem;
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3vw, 2.6rem);
     }
 
     header p {
       margin: 0 auto;
-      max-width: 720px;
+      max-width: 760px;
       color: var(--muted);
-      font-size: 1rem;
       line-height: 1.5;
     }
 
     main {
-      max-width: 920px;
-      margin: 0 auto 48px;
-      padding: 0 16px 32px;
+      max-width: 1100px;
+      margin: 0 auto 64px;
+      padding: 0 16px;
       display: grid;
       gap: 20px;
     }
@@ -57,617 +55,1890 @@
     .card {
       background: var(--card);
       border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+      padding: 20px;
       border: 1px solid var(--border);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
     }
 
-    .settings-grid {
+    .controls {
+      display: grid;
+      gap: 16px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .control-row label {
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    select {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+      min-width: 200px;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .view-toggle button {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .view-toggle button.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .composer-grid {
       display: grid;
       gap: 16px;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
 
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 10px 12px;
+    .composer-card {
+      padding: 16px;
+      border-radius: 14px;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 0.95rem;
-    }
-
-    textarea {
-      min-height: 140px;
-      resize: vertical;
-    }
-
-    .hint {
-      margin-top: 6px;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .toggle {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-    }
-
-    .toggle input {
-      width: 18px;
-      height: 18px;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-weight: 600;
-      background: var(--accent);
-      color: white;
+      background: #fff;
+      display: grid;
+      gap: 8px;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      box-shadow: 0 8px 18px rgba(47, 111, 237, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    button.secondary {
-      background: var(--accent-soft);
-      color: var(--accent);
-      box-shadow: none;
-      border: 1px solid var(--accent);
+    .composer-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
     }
 
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-      box-shadow: none;
-    }
-
-    button:hover:not(:disabled) {
-      transform: translateY(-1px);
-    }
-
-    .progress {
-      display: flex;
+    .tag {
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      font-weight: 600;
-    }
-
-    .pill {
-      background: var(--accent-soft);
-      color: var(--accent);
       padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      background: var(--accent-soft);
+      color: var(--accent);
     }
 
-    .question {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .timeline {
+      display: grid;
+      gap: 12px;
     }
 
-    .feedback {
-      border-left: 4px solid var(--success);
-      background: #f0faf6;
-      padding: 16px;
+    .timeline-item {
+      padding: 12px 16px;
+      border-left: 4px solid var(--accent);
+      background: #fff;
       border-radius: 12px;
-      margin-top: 12px;
+      border: 1px solid var(--border);
     }
 
-    .feedback h3 {
-      margin-top: 0;
+    .movement-group {
+      display: grid;
+      gap: 16px;
+    }
+
+    .movement-group h3 {
+      margin-bottom: 4px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 10;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 760px;
+      width: 100%;
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .section h3 {
+      margin: 0 0 8px;
+    }
+
+    .keywork {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fafafa;
       margin-bottom: 8px;
     }
 
-    .feedback ul {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .status {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 8px;
-    }
-
-    .question-list {
+    .resource {
       display: grid;
-      gap: 10px;
-      margin-top: 12px;
+      gap: 4px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fdfdfd;
+      margin-bottom: 8px;
     }
 
-    .question-list li {
-      line-height: 1.4;
+    .resource a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .summary-line {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding-top: 32px;
+      }
+
+      .modal-content {
+        padding: 18px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Palantir Deployment Strategist Interview Simulator</h1>
+    <h1>Contemporary Classical Explorer</h1>
     <p>
-      Practice a continuous mix of behavioral, mini-decomposition, and Thiel-esque curveball questions.
-      Answer each prompt in turn and get feedback every five questions plus a full summary at the end.
+      Navigate post-1900 classical music with filters, timelines, and movement clusters. Dive into detailed
+      composer profiles with listening suggestions and curated learning resources.
     </p>
   </header>
 
   <main>
-    <section class="card">
-      <h2>Simulator setup</h2>
-      <div class="settings-grid">
-        <div>
-          <label for="questionCount">Total questions</label>
-          <input id="questionCount" type="number" min="5" max="30" value="15" />
-          <div class="hint">Every 5 questions you will receive feedback.</div>
-        </div>
-        <div>
-          <label for="mixStyle">Mixing strategy</label>
-          <select id="mixStyle">
-            <option value="balanced" selected>Balanced (behavioral → decomposition → curveball)</option>
-            <option value="behavioral-heavy">Behavioral-heavy</option>
-            <option value="decomposition-heavy">Decomposition-heavy</option>
-            <option value="curveball-heavy">Curveball-heavy</option>
-          </select>
-          <div class="hint">Ensures a consistent mix across the session.</div>
-        </div>
-        <div>
-          <label for="model">LLM model name (optional)</label>
-          <input id="model" type="text" placeholder="gpt-4o-mini" />
-          <div class="hint">Used only if you enable LLM generation.</div>
+    <section class="card controls">
+      <div class="control-row">
+        <label for="search">Search</label>
+        <input id="search" type="text" placeholder="Search by composer, movement, nationality..." />
+        <span id="resultCount" class="summary-line"></span>
+      </div>
+      <div class="control-row">
+        <label for="movementFilter">Movement</label>
+        <select id="movementFilter"></select>
+        <label for="tendencyFilter">Tendency</label>
+        <select id="tendencyFilter"></select>
+        <label for="difficultyFilter">Difficulty</label>
+        <select id="difficultyFilter"></select>
+      </div>
+      <div class="control-row">
+        <div class="view-toggle" role="group" aria-label="View modes">
+          <button data-view="grid" class="active">Grid</button>
+          <button data-view="timeline">Timeline</button>
+          <button data-view="movement">By Movement</button>
         </div>
       </div>
-      <div class="settings-grid" style="margin-top: 16px;">
-        <div>
-          <label for="endpoint">LLM API endpoint (optional)</label>
-          <input id="endpoint" type="text" placeholder="https://api.openai.com/v1/chat/completions" />
-          <div class="hint">Uses an OpenAI-compatible chat completion endpoint.</div>
-        </div>
-        <div>
-          <label for="apiKey">API key (optional)</label>
-          <input id="apiKey" type="text" placeholder="sk-..." />
-          <div class="hint">Stored only in your browser session.</div>
-        </div>
-      </div>
-      <div class="toggle" style="margin-top: 16px;">
-        <input id="useLLM" type="checkbox" />
-        <label for="useLLM">Generate new questions with an LLM using the Glassdoor samples</label>
-      </div>
-      <div class="button-row">
-        <button id="startBtn">Start simulation</button>
-        <button id="resetBtn" class="secondary" disabled>Reset</button>
-      </div>
-      <div id="status" class="status"></div>
     </section>
 
-    <section id="interviewCard" class="card hidden">
-      <div class="progress">
-        <span id="progressText">Question 1 of 15</span>
-        <span id="categoryPill" class="pill">Behavioral</span>
-      </div>
-      <div id="questionText" class="question"></div>
-      <label for="answer">Your response</label>
-      <textarea id="answer" placeholder="Type your response here..."></textarea>
-      <div class="button-row">
-        <button id="nextBtn">Next question</button>
-        <button id="saveBtn" class="secondary">Save answer</button>
-      </div>
-      <div id="checkpointFeedback" class="feedback hidden"></div>
-    </section>
-
-    <section id="summaryCard" class="card hidden">
-      <h2>End-of-session feedback</h2>
-      <div id="summaryFeedback" class="feedback"></div>
-      <h3>Questions asked</h3>
-      <ol id="questionReview" class="question-list"></ol>
-    </section>
+    <section id="viewContainer" class="card"></section>
   </main>
 
+  <div id="composerModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalName"></h2>
+          <div id="modalMeta" class="summary-line"></div>
+        </div>
+        <button class="close-btn" id="closeModal" aria-label="Close">&times;</button>
+      </div>
+      <p id="modalDescription"></p>
+      <div id="modalTags" class="pill-row"></div>
+
+      <div class="section">
+        <h3>Key Works & Listening</h3>
+        <div id="modalWorks"></div>
+      </div>
+
+      <div class="section">
+        <h3>Influence Network</h3>
+        <div id="modalInfluence"></div>
+      </div>
+
+      <div class="section">
+        <h3>Resources</h3>
+        <div id="modalResources"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const SAMPLE_QUESTIONS = [
-      { type: "decomposition", text: "You're trying to identify the degree to which bribery goes unreported in a LATAM country. How would you narrow down on this?" },
-      { type: "behavioral", text: "What was the data point that you focused on for the success of your project?" },
-      { type: "decomposition", text: "Describe how you would create a recommendation system for a music streaming platform." },
-      { type: "behavioral", text: "Tell me about a time you failed." },
-      { type: "decomposition", text: "Explain how you would use data to manage a natural disaster in a major city." },
-      { type: "behavioral", text: "Tell me about a project where you had to use data to succeed." },
-      { type: "behavioral", text: "Provide an example of a time where you had to make a decision using data." },
-      { type: "decomposition", text: "Design a solution for a ride-sharing company to decrease driver waiting time." },
-      { type: "curveball", text: "Share three snapshots of your life that tell us what formed your personality and what drives you." },
-      { type: "curveball", text: "What is a contrarian belief you have?" },
-      { type: "behavioral", text: "Tell me about a time you worked with someone you disliked." },
-      { type: "behavioral", text: "Name a time you have come into conflict with a colleague." },
-      { type: "behavioral", text: "What was one thing you are proud of and one thing you are not proud of in your career?" },
-      { type: "decomposition", text: "Case study: You need to understand the fentanyl crisis in America. How would you approach the data and stakeholders?" },
-      { type: "decomposition", text: "How do you detect illegal firearms in postal packages?" },
-      { type: "behavioral", text: "What would be a reason the company decides to transfer you to another department?" },
-      { type: "behavioral", text: "Where exactly do you see yourself as a Deployment Strategist?" },
-      { type: "behavioral", text: "What role do you envision yourself playing as a Deployment Strategist?" },
-      { type: "decomposition", text: "Think through a data strategy for a direct-to-consumer mobility company." },
-      { type: "decomposition", text: "You are working for the IRS and have to identify fraudulent tax activity. How would you build a model to identify fraud?" },
-      { type: "behavioral", text: "Walk me through the most analytical/technical/data-heavy project you've worked on." },
-      { type: "behavioral", text: "What problem would you like to solve using data?" },
-      { type: "behavioral", text: "What would your boss say if you quit?" },
-      { type: "curveball", text: "Tell me something about you that's not in the CV." },
-      { type: "curveball", text: "What's one thing you believe in that most people disagree with you on?" },
-      { type: "decomposition", text: "Given made-up data tables, how would you decide where to increase/decrease capacity in the NY subway system?" },
-      { type: "decomposition", text: "Open-ended: How would you predict the number of gas stations in the states?" },
-      { type: "behavioral", text: "Name someone it was difficult to work with but that you would choose to work with again." },
-      { type: "behavioral", text: "Explain what you know about Palantir and the role." },
-      { type: "decomposition", text: "SQL-like prompt: how would you use group by/aggregate/merge to answer a business question?" },
-      { type: "behavioral", text: "How do you persuade critical stakeholders?" },
-      { type: "decomposition", text: "How would you detect doctors who prescribe fraudulent opioid drugs?" },
-      { type: "behavioral", text: "Tell me about a time when you have dealt with ambiguity." },
-      { type: "curveball", text: "If you could have all the data in the world, what data would you want and what problem would you solve?" },
-      { type: "decomposition", text: "How could Palantir improve the response time of the London NHS ambulance service?" },
-      { type: "curveball", text: "What is the biggest problem in the world and how would you solve it?" },
-      { type: "curveball", text: "How would you convince Facebook and Barclays to share their data?" },
-      { type: "curveball", text: "If you got $1M to invest, what project would you invest in?" },
-      { type: "curveball", text: "What is your superpower? What is your kryptonite?" },
-      { type: "behavioral", text: "How do you deal with professional conflict and failure?" },
-      { type: "behavioral", text: "What is your greatest accomplishment? Why do you want to work at Palantir?" },
-      { type: "decomposition", text: "Business case: London is flooded and an emergency state has been declared. You are working with the mayor—what would you do?" }
+    const COMPOSERS_DATA = [
+      {
+        id: 1,
+        name: "Arnold Schoenberg",
+        dates: "1874–1951",
+        nationality: "Austrian-American",
+        movement: "Second Viennese School",
+        tendency: "Serialism",
+        influences: [],
+        influenced: [2, 3, 5, 16, 17],
+        keyWorks: [
+          {
+            title: "Pierrot lunaire",
+            year: 1912,
+            spotify: "https://open.spotify.com/search/Pierrot%20lunaire%20Schoenberg",
+            recommendedRecording: "Ensemble Intercontemporain, Boulez",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Founder of the twelve-tone method and a pivotal figure bridging late Romanticism and modernism.",
+        difficulty: "Very High",
+        resources: [
+          {
+            type: "essay",
+            title: "Schoenberg and the Twelve-Tone Method",
+            url: "https://www.npr.org/2009/11/02/161439644/schoenberg-and-the-serialists",
+            description: "Introduction to serial thinking and its legacy."
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: "Alban Berg",
+        dates: "1885–1935",
+        nationality: "Austrian",
+        movement: "Second Viennese School",
+        tendency: "Expressionism",
+        influences: [1],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Wozzeck",
+            year: 1925,
+            spotify: "https://open.spotify.com/search/Wozzeck%20Berg",
+            recommendedRecording: "Vienna Philharmonic, Abbado",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Merged serial techniques with late-Romantic lyricism in landmark opera and chamber works.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 3,
+        name: "Anton Webern",
+        dates: "1883–1945",
+        nationality: "Austrian",
+        movement: "Second Viennese School",
+        tendency: "Serialism",
+        influences: [1],
+        influenced: [5, 8, 49, 60],
+        keyWorks: [
+          {
+            title: "Symphony, Op. 21",
+            year: 1928,
+            spotify: "https://open.spotify.com/search/Webern%20Symphony%20Op.%2021",
+            recommendedRecording: "Boulez, Chicago Symphony",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Compressed expression and structure into crystalline miniatures that shaped post-war modernism.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 4,
+        name: "Olivier Messiaen",
+        dates: "1908–1992",
+        nationality: "French",
+        movement: "French Modernism",
+        tendency: "Mysticism",
+        influences: [],
+        influenced: [5, 34, 35, 38],
+        keyWorks: [
+          {
+            title: "Quartet for the End of Time",
+            year: 1941,
+            spotify: "https://open.spotify.com/search/Quartet%20for%20the%20End%20of%20Time",
+            recommendedRecording: "Tashi Quartet",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Known for coloristic harmony, birdsong, and spiritual intensity influencing postwar Europe.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 5,
+        name: "Pierre Boulez",
+        dates: "1925–2016",
+        nationality: "French",
+        movement: "Darmstadt",
+        tendency: "Total Serialism",
+        influences: [3, 4],
+        influenced: [36],
+        keyWorks: [
+          {
+            title: "Le Marteau sans maître",
+            year: 1955,
+            spotify: "https://open.spotify.com/search/Le%20Marteau%20sans%20maitre",
+            recommendedRecording: "Ensemble Intercontemporain",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Architect of post-war avant-garde rigor, shaping serial thinking and modern performance practice.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 6,
+        name: "Karlheinz Stockhausen",
+        dates: "1928–2007",
+        nationality: "German",
+        movement: "Darmstadt / Electronic",
+        tendency: "Electronic",
+        influences: [4, 3],
+        influenced: [52, 53],
+        keyWorks: [
+          {
+            title: "Gesang der Jünglinge",
+            year: 1956,
+            spotify: "https://open.spotify.com/search/Gesang%20der%20Junglinge",
+            recommendedRecording: "Stockhausen-Verlag",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Expanded serial ideas into spatialized electronics, process forms, and immersive music theater.",
+        difficulty: "Very High",
+        resources: [
+          {
+            type: "video",
+            title: "Stockhausen in the 1970s",
+            url: "https://www.youtube.com/watch?v=K_EkN9nxtsI",
+            description: "Archival footage of Stockhausen discussing electronic work."
+          }
+        ]
+      },
+      {
+        id: 7,
+        name: "Luigi Nono",
+        dates: "1924–1990",
+        nationality: "Italian",
+        movement: "Darmstadt",
+        tendency: "Political Modernism",
+        influences: [4, 5],
+        influenced: [47],
+        keyWorks: [
+          {
+            title: "Il canto sospeso",
+            year: 1956,
+            spotify: "https://open.spotify.com/search/Il%20canto%20sospeso",
+            recommendedRecording: "SWR Symphony",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Combined radical politics with experimental vocal and spatialized sonorities.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 8,
+        name: "Iannis Xenakis",
+        dates: "1922–2001",
+        nationality: "Greek-French",
+        movement: "Avant-Garde",
+        tendency: "Stochastic",
+        influences: [3],
+        influenced: [49, 60],
+        keyWorks: [
+          {
+            title: "Metastaseis",
+            year: 1955,
+            spotify: "https://open.spotify.com/search/Metastaseis%20Xenakis",
+            recommendedRecording: "LaSalle Quartet",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Applied mathematics, architecture, and probability to create monumental sonic structures.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 9,
+        name: "György Ligeti",
+        dates: "1923–2006",
+        nationality: "Hungarian-Austrian",
+        movement: "Post-Avant-Garde",
+        tendency: "Micropolyphony",
+        influences: [3, 4],
+        influenced: [34, 58],
+        keyWorks: [
+          {
+            title: "Atmosphères",
+            year: 1961,
+            spotify: "https://open.spotify.com/search/Ligeti%20Atmospheres",
+            recommendedRecording: "Berlin Philharmonic, Abbado",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Invented dense sound-mass textures and rhythmic labyrinths of late 20th-century music.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 10,
+        name: "Steve Reich",
+        dates: "1936–",
+        nationality: "American",
+        movement: "Minimalism",
+        tendency: "Process Music",
+        influences: [],
+        influenced: [41, 43, 44],
+        keyWorks: [
+          {
+            title: "Music for 18 Musicians",
+            year: 1976,
+            spotify: "https://open.spotify.com/search/Music%20for%2018%20Musicians",
+            recommendedRecording: "Steve Reich and Musicians",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Pioneered phase-shifting and process-driven repetition shaping contemporary rhythm and harmony.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 11,
+        name: "Philip Glass",
+        dates: "1937–",
+        nationality: "American",
+        movement: "Minimalism",
+        tendency: "Repetition",
+        influences: [10],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Einstein on the Beach",
+            year: 1976,
+            spotify: "https://open.spotify.com/search/Einstein%20on%20the%20Beach",
+            recommendedRecording: "Philip Glass Ensemble",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Expanded minimalist patterns into operatic and cinematic forms.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 12,
+        name: "Terry Riley",
+        dates: "1935–",
+        nationality: "American",
+        movement: "Minimalism",
+        tendency: "Process",
+        influences: [],
+        influenced: [10],
+        keyWorks: [
+          {
+            title: "In C",
+            year: 1964,
+            spotify: "https://open.spotify.com/search/Terry%20Riley%20In%20C",
+            recommendedRecording: "Bang on a Can All-Stars",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Early minimalist pioneer known for modular repetition and improvisatory flexibility.",
+        difficulty: "Low",
+        resources: []
+      },
+      {
+        id: 13,
+        name: "La Monte Young",
+        dates: "1935–",
+        nationality: "American",
+        movement: "Minimalism",
+        tendency: "Drone",
+        influences: [],
+        influenced: [10, 11],
+        keyWorks: [
+          {
+            title: "The Well-Tuned Piano",
+            year: 1964,
+            spotify: "https://open.spotify.com/search/Well-Tuned%20Piano",
+            recommendedRecording: "Theatre of Eternal Music",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Drone-based minimalism exploring just intonation and long-form temporal immersion.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 14,
+        name: "Henri Dutilleux",
+        dates: "1916–2013",
+        nationality: "French",
+        movement: "French Modernism",
+        tendency: "Colorism",
+        influences: [4],
+        influenced: [34],
+        keyWorks: [
+          {
+            title: "Métaboles",
+            year: 1964,
+            spotify: "https://open.spotify.com/search/Dutilleux%20Metaboles",
+            recommendedRecording: "Boston Symphony, Ozawa",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Refined orchestral color and harmonic subtlety outside strict serialism.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 15,
+        name: "Witold Lutosławski",
+        dates: "1913–1994",
+        nationality: "Polish",
+        movement: "Post-War Modernism",
+        tendency: "Controlled Aleatory",
+        influences: [4],
+        influenced: [31],
+        keyWorks: [
+          {
+            title: "Concerto for Orchestra",
+            year: 1954,
+            spotify: "https://open.spotify.com/search/Lutoslawski%20Concerto%20for%20Orchestra",
+            recommendedRecording: "Los Angeles Philharmonic, Salonen",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Merged folk inflections with formal innovation and controlled chance procedures.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 16,
+        name: "Elliott Carter",
+        dates: "1908–2012",
+        nationality: "American",
+        movement: "Post-Webern Serialism",
+        tendency: "Metric Modulation",
+        influences: [1, 3],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "String Quartet No. 3",
+            year: 1971,
+            spotify: "https://open.spotify.com/search/Elliott%20Carter%20String%20Quartet%203",
+            recommendedRecording: "Juilliard Quartet",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Pioneered metric modulation and complex polyphonic narratives in chamber music.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 17,
+        name: "Milton Babbitt",
+        dates: "1916–2011",
+        nationality: "American",
+        movement: "Post-Webern Serialism",
+        tendency: "Serialism",
+        influences: [1, 3],
+        influenced: [49],
+        keyWorks: [
+          {
+            title: "Philomel",
+            year: 1964,
+            spotify: "https://open.spotify.com/search/Babbitt%20Philomel",
+            recommendedRecording: "Bethany Beardslee, Columbia",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Advanced total serialism and electronic-vocal hybrids in American academia.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 18,
+        name: "Luciano Berio",
+        dates: "1925–2003",
+        nationality: "Italian",
+        movement: "European Avant-Garde",
+        tendency: "Collage",
+        influences: [4],
+        influenced: [21],
+        keyWorks: [
+          {
+            title: "Sinfonia",
+            year: 1968,
+            spotify: "https://open.spotify.com/search/Berio%20Sinfonia",
+            recommendedRecording: "Swingle Singers, Boulez",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Known for transformative orchestration, vocal extended techniques, and textural collage.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 19,
+        name: "Mauricio Kagel",
+        dates: "1931–2008",
+        nationality: "Argentinian-German",
+        movement: "European Avant-Garde",
+        tendency: "Music Theatre",
+        influences: [6],
+        influenced: [21],
+        keyWorks: [
+          {
+            title: "Staatstheater",
+            year: 1971,
+            spotify: "https://open.spotify.com/search/Kagel%20Staatstheater",
+            recommendedRecording: "Col Legno",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Merged satire and theatricality into avant-garde performance spectacles.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 20,
+        name: "Dieter Schnebel",
+        dates: "1930–2018",
+        nationality: "German",
+        movement: "European Avant-Garde",
+        tendency: "Vocal Experimentation",
+        influences: [6],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Glossolalie",
+            year: 1959,
+            spotify: "https://open.spotify.com/search/Schnebel%20Glossolalie",
+            recommendedRecording: "WERGO",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Expanded vocal performance practice into radical gestural sound poetry.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 21,
+        name: "Georges Aperghis",
+        dates: "1945–",
+        nationality: "Greek-French",
+        movement: "European Avant-Garde",
+        tendency: "Music Theatre",
+        influences: [18, 19],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Machinations",
+            year: 2000,
+            spotify: "https://open.spotify.com/search/Aperghis%20Machinations",
+            recommendedRecording: "IRCAM",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Explores theatricality, language, and fragmented narratives in vocal works.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 22,
+        name: "John Cage",
+        dates: "1912–1992",
+        nationality: "American",
+        movement: "American Experimentalism",
+        tendency: "Chance",
+        influences: [],
+        influenced: [23, 24, 25, 26],
+        keyWorks: [
+          {
+            title: "4'33\"",
+            year: 1952,
+            spotify: "https://open.spotify.com/search/John%20Cage%204'33",
+            recommendedRecording: "BBC Symphony Orchestra",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Reoriented composition around chance, indeterminacy, and the musicality of everyday sound.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 23,
+        name: "Earle Brown",
+        dates: "1926–2002",
+        nationality: "American",
+        movement: "American Experimentalism",
+        tendency: "Open Form",
+        influences: [22],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "December 1952",
+            year: 1952,
+            spotify: "https://open.spotify.com/search/Earle%20Brown%20December%201952",
+            recommendedRecording: "New Music Ensemble",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Pioneered graphic scores and flexible formal structures.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 24,
+        name: "Christian Wolff",
+        dates: "1934–",
+        nationality: "American",
+        movement: "American Experimentalism",
+        tendency: "Indeterminacy",
+        influences: [22],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "For 1, 2 or 3 People",
+            year: 1964,
+            spotify: "https://open.spotify.com/search/Christian%20Wolff%20For%201%202%203%20People",
+            recommendedRecording: "Composers Inside Electronics",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Explores performer agency and socially engaged experimental structures.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 25,
+        name: "Alvin Lucier",
+        dates: "1931–2021",
+        nationality: "American",
+        movement: "American Experimentalism",
+        tendency: "Acoustics",
+        influences: [22],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "I Am Sitting in a Room",
+            year: 1969,
+            spotify: "https://open.spotify.com/search/Alvin%20Lucier%20I%20Am%20Sitting%20in%20a%20Room",
+            recommendedRecording: "Lovely Music",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Explored acoustic phenomena and gradual process in site-specific works.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 26,
+        name: "Morton Feldman",
+        dates: "1926–1987",
+        nationality: "American",
+        movement: "New York School",
+        tendency: "Quietism",
+        influences: [22],
+        influenced: [30],
+        keyWorks: [
+          {
+            title: "Rothko Chapel",
+            year: 1971,
+            spotify: "https://open.spotify.com/search/Feldman%20Rothko%20Chapel",
+            recommendedRecording: "ECM New Series",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Created long-duration, hushed canvases with sparse gestures and nuanced timbre.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 27,
+        name: "Harrison Birtwistle",
+        dates: "1934–2022",
+        nationality: "British",
+        movement: "UK Modernism",
+        tendency: "Ritual",
+        influences: [4, 7],
+        influenced: [29],
+        keyWorks: [
+          {
+            title: "The Mask of Orpheus",
+            year: 1986,
+            spotify: "https://open.spotify.com/search/Birtwistle%20Mask%20of%20Orpheus",
+            recommendedRecording: "BBC Symphony, Knussen",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Known for mythic dramaturgy and dense rhythmic blocks.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 28,
+        name: "Jonathan Harvey",
+        dates: "1939–2012",
+        nationality: "British",
+        movement: "UK Modernism",
+        tendency: "Spiritual Electronics",
+        influences: [4, 6],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Mortuos Plango, Vivos Voco",
+            year: 1980,
+            spotify: "https://open.spotify.com/search/Mortuos%20Plango%20Vivos%20Voco",
+            recommendedRecording: "IRCAM",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Combined spectral techniques with sacred imagery and digital sound design.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 29,
+        name: "Thomas Adès",
+        dates: "1971–",
+        nationality: "British",
+        movement: "Contemporary UK",
+        tendency: "Eclectic Modernism",
+        influences: [27],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Asyla",
+            year: 1997,
+            spotify: "https://open.spotify.com/search/Ades%20Asyla",
+            recommendedRecording: "Birmingham Contemporary Music Group",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Balances virtuosic orchestration with eclectic stylistic references.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 30,
+        name: "Arvo Pärt",
+        dates: "1935–",
+        nationality: "Estonian",
+        movement: "Holy Minimalism",
+        tendency: "Tintinnabuli",
+        influences: [26],
+        influenced: [57],
+        keyWorks: [
+          {
+            title: "Spiegel im Spiegel",
+            year: 1978,
+            spotify: "https://open.spotify.com/search/Spiegel%20im%20Spiegel",
+            recommendedRecording: "ECM New Series",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Developed the tintinnabuli style blending sacred minimalism and meditative clarity.",
+        difficulty: "Low",
+        resources: []
+      },
+      {
+        id: 31,
+        name: "Henryk Górecki",
+        dates: "1933–2010",
+        nationality: "Polish",
+        movement: "Holy Minimalism",
+        tendency: "Spiritual",
+        influences: [15],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Symphony No. 3",
+            year: 1976,
+            spotify: "https://open.spotify.com/search/Gorecki%20Symphony%203",
+            recommendedRecording: "London Sinfonietta",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Used slow-moving, devotional textures with Polish folk resonances.",
+        difficulty: "Low",
+        resources: []
+      },
+      {
+        id: 32,
+        name: "Alfred Schnittke",
+        dates: "1934–1998",
+        nationality: "Russian-German",
+        movement: "Polystylism",
+        tendency: "Eclecticism",
+        influences: [4],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Concerto Grosso No. 1",
+            year: 1977,
+            spotify: "https://open.spotify.com/search/Schnittke%20Concerto%20Grosso%201",
+            recommendedRecording: "Kremerata Baltica",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Combined historical references with modernist textures into polystylistic collages.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 33,
+        name: "Sofia Gubaidulina",
+        dates: "1931–",
+        nationality: "Russian",
+        movement: "Polystylism",
+        tendency: "Spiritual Modernism",
+        influences: [4],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Offertorium",
+            year: 1980,
+            spotify: "https://open.spotify.com/search/Gubaidulina%20Offertorium",
+            recommendedRecording: "Gidon Kremer, Deutsche Grammophon",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Explores mysticism and unconventional instrumentation in vivid sonic rituals.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 34,
+        name: "Kaija Saariaho",
+        dates: "1952–2023",
+        nationality: "Finnish",
+        movement: "Spectral-Adjacent",
+        tendency: "Timbre",
+        influences: [4, 9],
+        influenced: [54],
+        keyWorks: [
+          {
+            title: "L'Amour de loin",
+            year: 2000,
+            spotify: "https://open.spotify.com/search/L'amour%20de%20loin",
+            recommendedRecording: "Finnish National Opera",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Combined spectral harmony, electronics, and lyricism into luminous soundscapes.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 35,
+        name: "Magnus Lindberg",
+        dates: "1958–",
+        nationality: "Finnish",
+        movement: "Spectral-Adjacent",
+        tendency: "Orchestral Color",
+        influences: [4, 6],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Aura",
+            year: 1994,
+            spotify: "https://open.spotify.com/search/Magnus%20Lindberg%20Aura",
+            recommendedRecording: "Finnish Radio Symphony",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Fuses spectral color with driving rhythmic momentum.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 36,
+        name: "Philippe Hurel",
+        dates: "1955–",
+        nationality: "French",
+        movement: "Spectral-Adjacent",
+        tendency: "Rhythmic Complexity",
+        influences: [5],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Figures Libres",
+            year: 1996,
+            spotify: "https://open.spotify.com/search/Philippe%20Hurel%20Figures%20Libres",
+            recommendedRecording: "Ensemble Intercontemporain",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Combines spectral harmony with angular rhythmic designs.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 37,
+        name: "Tristan Murail",
+        dates: "1947–",
+        nationality: "French",
+        movement: "Spectralism",
+        tendency: "Spectral",
+        influences: [4],
+        influenced: [34],
+        keyWorks: [
+          {
+            title: "Gondwana",
+            year: 1980,
+            spotify: "https://open.spotify.com/search/Murail%20Gondwana",
+            recommendedRecording: "Ensemble L'Itineraire",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Co-founder of spectralism, using acoustic analysis to guide harmony and form.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 38,
+        name: "Gérard Grisey",
+        dates: "1946–1998",
+        nationality: "French",
+        movement: "Spectralism",
+        tendency: "Spectral",
+        influences: [4],
+        influenced: [34],
+        keyWorks: [
+          {
+            title: "Partiels",
+            year: 1975,
+            spotify: "https://open.spotify.com/search/Grisey%20Partiels",
+            recommendedRecording: "Ensemble Intercontemporain",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Expanded spectral thinking into evolving timbral dramaturgy.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 39,
+        name: "Helmut Lachenmann",
+        dates: "1935–",
+        nationality: "German",
+        movement: "New Complexity",
+        tendency: "Musique Concrète Instrumentale",
+        influences: [6],
+        influenced: [49, 50],
+        keyWorks: [
+          {
+            title: "Gran Torso",
+            year: 1972,
+            spotify: "https://open.spotify.com/search/Lachenmann%20Gran%20Torso",
+            recommendedRecording: "Arditti Quartet",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Reimagined instrumental technique to foreground noise, texture, and physicality.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 40,
+        name: "Wolfgang Rihm",
+        dates: "1952–",
+        nationality: "German",
+        movement: "New Simplicity",
+        tendency: "Expressionism",
+        influences: [27],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Jagden und Formen",
+            year: 1995,
+            spotify: "https://open.spotify.com/search/Rihm%20Jagden%20und%20Formen",
+            recommendedRecording: "Ensemble Modern",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Balances expressive intensity with modernist textures and forms.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 41,
+        name: "John Adams",
+        dates: "1947–",
+        nationality: "American",
+        movement: "Post-Minimalism",
+        tendency: "Rhythmic Drive",
+        influences: [10],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Harmonielehre",
+            year: 1985,
+            spotify: "https://open.spotify.com/search/Adams%20Harmonielehre",
+            recommendedRecording: "San Francisco Symphony",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Merged minimalist pulse with symphonic rhetoric and late-Romantic harmony.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 42,
+        name: "Louis Andriessen",
+        dates: "1939–2021",
+        nationality: "Dutch",
+        movement: "Post-Minimalism",
+        tendency: "Political Minimalism",
+        influences: [10],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "De Staat",
+            year: 1976,
+            spotify: "https://open.spotify.com/search/Andriessen%20De%20Staat",
+            recommendedRecording: "Asko Ensemble",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Fused minimalism with strident brass sonorities and political themes.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 43,
+        name: "Michael Gordon",
+        dates: "1956–",
+        nationality: "American",
+        movement: "Post-Minimalism",
+        tendency: "Driving Minimalism",
+        influences: [10],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Timber",
+            year: 2009,
+            spotify: "https://open.spotify.com/search/Michael%20Gordon%20Timber",
+            recommendedRecording: "Manhattan School Percussion",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Co-founder of Bang on a Can; blends rock energy with minimalist process.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 44,
+        name: "Julia Wolfe",
+        dates: "1958–",
+        nationality: "American",
+        movement: "Post-Minimalism",
+        tendency: "Storytelling",
+        influences: [10],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Anthracite Fields",
+            year: 2014,
+            spotify: "https://open.spotify.com/search/Julia%20Wolfe%20Anthracite%20Fields",
+            recommendedRecording: "Bang on a Can",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Combines documentary narrative with propulsive textures.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 45,
+        name: "Enno Poppe",
+        dates: "1969–",
+        nationality: "German",
+        movement: "Contemporary Europe",
+        tendency: "Process",
+        influences: [39],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Speicher",
+            year: 2008,
+            spotify: "https://open.spotify.com/search/Enno%20Poppe%20Speicher",
+            recommendedRecording: "Ensemble Intercontemporain",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Builds intricate textures through process-driven harmonic and rhythmic mutation.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 46,
+        name: "Chaya Czernowin",
+        dates: "1957–",
+        nationality: "Israeli-American",
+        movement: "Contemporary Europe",
+        tendency: "Textural",
+        influences: [39],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Maim",
+            year: 2001,
+            spotify: "https://open.spotify.com/search/Czernowin%20Maim",
+            recommendedRecording: "Ensemble Modern",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Explores extremes of density, fragility, and sonic saturation.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 47,
+        name: "Pierluigi Billone",
+        dates: "1960–",
+        nationality: "Italian",
+        movement: "Contemporary Europe",
+        tendency: "Instrumental Explorations",
+        influences: [7],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Mani.Matta",
+            year: 2008,
+            spotify: "https://open.spotify.com/search/Billone%20Mani%20Matta",
+            recommendedRecording: "Kairos",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Known for tactile, noise-rich exploration of instrumental bodies.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 48,
+        name: "Raphaël Cendo",
+        dates: "1975–",
+        nationality: "French",
+        movement: "Contemporary Europe",
+        tendency: "Saturation",
+        influences: [39],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Tract",
+            year: 2009,
+            spotify: "https://open.spotify.com/search/Raphael%20Cendo%20Tract",
+            recommendedRecording: "Ensemble Intercontemporain",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Proponent of saturationism with aggressive, hyper-dense sonorities.",
+        difficulty: "Very High",
+        resources: []
+      },
+      {
+        id: 49,
+        name: "Richard Barrett",
+        dates: "1959–",
+        nationality: "British",
+        movement: "New Complexity",
+        tendency: "Extreme Complexity",
+        influences: [3, 39],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Opening of the Mouth",
+            year: 1997,
+            spotify: "https://open.spotify.com/search/Richard%20Barrett%20Opening%20of%20the%20Mouth",
+            recommendedRecording: "ELISION Ensemble",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Dense, virtuosic music that combines extended techniques with political text.",
+        difficulty: "Extreme",
+        resources: []
+      },
+      {
+        id: 50,
+        name: "Chris Dench",
+        dates: "1953–",
+        nationality: "Australian",
+        movement: "New Complexity",
+        tendency: "Extreme Complexity",
+        influences: [39],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Pascal's Triangle",
+            year: 1981,
+            spotify: "https://open.spotify.com/search/Chris%20Dench%20Pascals%20Triangle",
+            recommendedRecording: "ELISION Ensemble",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Known for intricate, multilayered structures and extended technique.",
+        difficulty: "Extreme",
+        resources: []
+      },
+      {
+        id: 51,
+        name: "James Dillon",
+        dates: "1950–",
+        nationality: "Scottish",
+        movement: "New Complexity",
+        tendency: "Extreme Complexity",
+        influences: [39, 60],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Nine Rivers",
+            year: 2000,
+            spotify: "https://open.spotify.com/search/James%20Dillon%20Nine%20Rivers",
+            recommendedRecording: "Red Note Ensemble",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Large-scale, virtuosic cycles blending complexity with lyrical intensity.",
+        difficulty: "Extreme",
+        resources: []
+      },
+      {
+        id: 52,
+        name: "Jonty Harrison",
+        dates: "1952–",
+        nationality: "British",
+        movement: "Live Electronics",
+        tendency: "Electroacoustic",
+        influences: [6],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "...et ainsi de suite",
+            year: 1981,
+            spotify: "https://open.spotify.com/search/Jonty%20Harrison%20et%20ainsi%20de%20suite",
+            recommendedRecording: "BEAST",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Major figure in acousmatic and spatialized electronic music.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 53,
+        name: "Natasha Barrett",
+        dates: "1972–",
+        nationality: "Norwegian",
+        movement: "Live Electronics",
+        tendency: "Electroacoustic",
+        influences: [6],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Puzzle",
+            year: 2011,
+            spotify: "https://open.spotify.com/search/Natasha%20Barrett%20Puzzle",
+            recommendedRecording: "Borealis Festival",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Creates immersive electroacoustic works exploring spatial illusion.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 54,
+        name: "Clara Iannotta",
+        dates: "1983–",
+        nationality: "Italian",
+        movement: "Younger Generation",
+        tendency: "Timbral",
+        influences: [34],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Drowned in the Waves",
+            year: 2013,
+            spotify: "https://open.spotify.com/search/Clara%20Iannotta%20Drowned%20in%20the%20Waves",
+            recommendedRecording: "Ensemble Modern",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Explores fragile, haloed timbres and slow-moving textures.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 55,
+        name: "Malin Bång",
+        dates: "1974–",
+        nationality: "Swedish",
+        movement: "Younger Generation",
+        tendency: "Experimental",
+        influences: [39],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Disintegration",
+            year: 2011,
+            spotify: "https://open.spotify.com/search/Malin%20Bang%20Disintegration",
+            recommendedRecording: "KammarensembleN",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Fuses installation practice with concert music and extended technique.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 56,
+        name: "Dai Fujikura",
+        dates: "1977–",
+        nationality: "Japanese-British",
+        movement: "Younger Generation",
+        tendency: "Coloristic",
+        influences: [34],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Amaterasu",
+            year: 2017,
+            spotify: "https://open.spotify.com/search/Dai%20Fujikura%20Amaterasu",
+            recommendedRecording: "BBC Symphony Orchestra",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Crafts luminous orchestral works with vivid spectral colors.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 57,
+        name: "Anna Thorvaldsdottir",
+        dates: "1977–",
+        nationality: "Icelandic",
+        movement: "Younger Generation",
+        tendency: "Atmospheric",
+        influences: [30],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Aeriality",
+            year: 2011,
+            spotify: "https://open.spotify.com/search/Anna%20Thorvaldsdottir%20Aeriality",
+            recommendedRecording: "ICE Ensemble",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Creates vast, organic soundscapes with slow transformations.",
+        difficulty: "Medium",
+        resources: []
+      },
+      {
+        id: 58,
+        name: "Unsuk Chin",
+        dates: "1961–",
+        nationality: "South Korean",
+        movement: "Contemporary Europe",
+        tendency: "Virtuosic",
+        influences: [9],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Violin Concerto",
+            year: 2001,
+            spotify: "https://open.spotify.com/search/Unsuk%20Chin%20Violin%20Concerto",
+            recommendedRecording: "Helsinki Philharmonic",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Blends virtuosity with crystalline orchestration and rhythmic brightness.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 59,
+        name: "Salvatore Sciarrino",
+        dates: "1947–",
+        nationality: "Italian",
+        movement: "Post-Avant-Garde",
+        tendency: "Fragile Sonority",
+        influences: [22],
+        influenced: [],
+        keyWorks: [
+          {
+            title: "Luci mie traditrici",
+            year: 1998,
+            spotify: "https://open.spotify.com/search/Sciarrino%20Luci%20mie%20traditrici",
+            recommendedRecording: "Bologna Teatro Comunale",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Known for whisper-quiet textures and theatrical intensity.",
+        difficulty: "High",
+        resources: []
+      },
+      {
+        id: 60,
+        name: "Brian Ferneyhough",
+        dates: "1943–",
+        nationality: "British",
+        movement: "New Complexity",
+        tendency: "Extreme Complexity",
+        influences: [3],
+        influenced: [49, 50, 51],
+        keyWorks: [
+          {
+            title: "La terre est un homme",
+            year: 1979,
+            spotify: "https://open.spotify.com/search/Ferneyhough%20La%20terre%20est%20un%20homme",
+            recommendedRecording: "Arditti Quartet",
+            spotifyTrackId: ""
+          }
+        ],
+        description: "Iconic new complexity composer with dense notation and layered temporal structures.",
+        difficulty: "Extreme",
+        resources: []
+      }
     ];
 
-    const QUESTION_TYPES = ["behavioral", "decomposition", "curveball"];
-    const TYPE_LABELS = {
-      behavioral: "Behavioral",
-      decomposition: "Mini-decomposition",
-      curveball: "Curveball"
-    };
-
     const state = {
-      questions: [],
-      answers: [],
-      currentIndex: 0,
-      checkpoints: []
+      view: "grid",
+      search: "",
+      movement: "all",
+      tendency: "all",
+      difficulty: "all"
     };
 
-    const elements = {
-      questionCount: document.getElementById("questionCount"),
-      mixStyle: document.getElementById("mixStyle"),
-      model: document.getElementById("model"),
-      endpoint: document.getElementById("endpoint"),
-      apiKey: document.getElementById("apiKey"),
-      useLLM: document.getElementById("useLLM"),
-      startBtn: document.getElementById("startBtn"),
-      resetBtn: document.getElementById("resetBtn"),
-      status: document.getElementById("status"),
-      interviewCard: document.getElementById("interviewCard"),
-      summaryCard: document.getElementById("summaryCard"),
-      progressText: document.getElementById("progressText"),
-      categoryPill: document.getElementById("categoryPill"),
-      questionText: document.getElementById("questionText"),
-      answer: document.getElementById("answer"),
-      nextBtn: document.getElementById("nextBtn"),
-      saveBtn: document.getElementById("saveBtn"),
-      checkpointFeedback: document.getElementById("checkpointFeedback"),
-      summaryFeedback: document.getElementById("summaryFeedback"),
-      questionReview: document.getElementById("questionReview")
+    const viewContainer = document.getElementById("viewContainer");
+    const searchInput = document.getElementById("search");
+    const movementFilter = document.getElementById("movementFilter");
+    const tendencyFilter = document.getElementById("tendencyFilter");
+    const difficultyFilter = document.getElementById("difficultyFilter");
+    const resultCount = document.getElementById("resultCount");
+
+    const modal = document.getElementById("composerModal");
+    const modalName = document.getElementById("modalName");
+    const modalMeta = document.getElementById("modalMeta");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalTags = document.getElementById("modalTags");
+    const modalWorks = document.getElementById("modalWorks");
+    const modalInfluence = document.getElementById("modalInfluence");
+    const modalResources = document.getElementById("modalResources");
+    const closeModal = document.getElementById("closeModal");
+
+    const getStartYear = (dates) => {
+      const match = dates.match(/\d{4}/);
+      return match ? Number(match[0]) : 0;
     };
 
-    const shuffle = (array) => {
-      const arr = [...array];
-      for (let i = arr.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
+    const buildFilterOptions = (select, values) => {
+      select.innerHTML = "";
+      const optionAll = document.createElement("option");
+      optionAll.value = "all";
+      optionAll.textContent = "All";
+      select.appendChild(optionAll);
+
+      values.forEach((value) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+      });
     };
 
-    const getMixPattern = (style) => {
-      switch (style) {
-        case "behavioral-heavy":
-          return ["behavioral", "behavioral", "decomposition", "behavioral", "curveball"]; 
-        case "decomposition-heavy":
-          return ["decomposition", "behavioral", "decomposition", "curveball", "decomposition"]; 
-        case "curveball-heavy":
-          return ["curveball", "behavioral", "decomposition", "curveball", "behavioral"]; 
-        default:
-          return ["behavioral", "decomposition", "curveball"];
-      }
+    const uniqueValues = (key) => {
+      return [...new Set(COMPOSERS_DATA.map((composer) => composer[key]).filter(Boolean))].sort();
     };
 
-    const buildSession = (count, style) => {
-      const buckets = {
-        behavioral: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "behavioral")),
-        decomposition: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "decomposition")),
-        curveball: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "curveball"))
-      };
+    buildFilterOptions(movementFilter, uniqueValues("movement"));
+    buildFilterOptions(tendencyFilter, uniqueValues("tendency"));
+    buildFilterOptions(difficultyFilter, uniqueValues("difficulty"));
 
-      const pattern = getMixPattern(style);
-      const session = [];
-      let patternIndex = 0;
+    const matchesFilters = (composer) => {
+      const query = state.search.toLowerCase();
+      const inSearch =
+        composer.name.toLowerCase().includes(query) ||
+        composer.movement.toLowerCase().includes(query) ||
+        composer.nationality.toLowerCase().includes(query) ||
+        composer.tendency.toLowerCase().includes(query);
 
-      while (session.length < count) {
-        const type = pattern[patternIndex % pattern.length];
-        const pool = buckets[type];
-        if (pool.length === 0) {
-          const fallbackType = QUESTION_TYPES.find((t) => buckets[t].length > 0);
-          if (!fallbackType) break;
-          session.push(buckets[fallbackType].shift());
-        } else {
-          session.push(pool.shift());
+      return (
+        (state.search === "" || inSearch) &&
+        (state.movement === "all" || composer.movement === state.movement) &&
+        (state.tendency === "all" || composer.tendency === state.tendency) &&
+        (state.difficulty === "all" || composer.difficulty === state.difficulty)
+      );
+    };
+
+    const getFilteredComposers = () => {
+      return COMPOSERS_DATA.filter(matchesFilters);
+    };
+
+    const composerMap = Object.fromEntries(COMPOSERS_DATA.map((composer) => [composer.id, composer]));
+
+    const renderGrid = (composers) => {
+      const grid = document.createElement("div");
+      grid.className = "composer-grid";
+      composers.forEach((composer) => {
+        const card = document.createElement("div");
+        card.className = "composer-card";
+        card.innerHTML = `
+          <strong>${composer.name}</strong>
+          <div class="summary-line">${composer.dates} • ${composer.nationality}</div>
+          <div class="summary-line">${composer.movement}</div>
+          <span class="tag">${composer.tendency}</span>
+        `;
+        card.addEventListener("click", () => openModal(composer));
+        grid.appendChild(card);
+      });
+      viewContainer.appendChild(grid);
+    };
+
+    const renderTimeline = (composers) => {
+      const timeline = document.createElement("div");
+      timeline.className = "timeline";
+      composers
+        .sort((a, b) => getStartYear(a.dates) - getStartYear(b.dates))
+        .forEach((composer) => {
+          const item = document.createElement("div");
+          item.className = "timeline-item";
+          item.innerHTML = `
+            <strong>${composer.name}</strong>
+            <div class="summary-line">${composer.dates} • ${composer.movement}</div>
+            <div class="summary-line">${composer.tendency} • ${composer.nationality}</div>
+          `;
+          item.addEventListener("click", () => openModal(composer));
+          timeline.appendChild(item);
+        });
+      viewContainer.appendChild(timeline);
+    };
+
+    const renderByMovement = (composers) => {
+      const groups = {};
+      composers.forEach((composer) => {
+        if (!groups[composer.movement]) {
+          groups[composer.movement] = [];
         }
-        patternIndex += 1;
-      }
-      return session;
-    };
+        groups[composer.movement].push(composer);
+      });
 
-    const createPrompt = (count) => {
-      return `You are generating interview questions for a Palantir Deployment Strategist simulator.\n\n` +
-        `Use the provided sample questions as inspiration. Return ${count} questions in strict JSON format: ` +
-        `[{"type":"behavioral|decomposition|curveball","text":"..."}].\n` +
-        `Constraints:\n- Mix the question types evenly.\n- Keep each question concise and interview-ready.\n- Stay within Palantir DS themes: data strategy, ambiguity, stakeholder management, and curveball personality checks.\n` +
-        `Samples:\n${SAMPLE_QUESTIONS.map((q) => `- (${q.type}) ${q.text}`).join("\n")}`;
-    };
-
-    const extractJsonArray = (rawText) => {
-      if (!rawText) return [];
-      try {
-        return JSON.parse(rawText);
-      } catch (error) {
-        const start = rawText.indexOf("[");
-        const end = rawText.lastIndexOf("]");
-        if (start === -1 || end === -1 || end <= start) {
-          throw new Error("LLM response did not include a JSON array.");
-        }
-        const slice = rawText.slice(start, end + 1);
-        return JSON.parse(slice);
-      }
-    };
-
-    const normalizeQuestions = (items) => {
-      if (!Array.isArray(items)) return [];
-      const seen = new Set();
-      return items
-        .map((item) => ({
-          type: typeof item?.type === "string" ? item.type.toLowerCase() : "",
-          text: typeof item?.text === "string" ? item.text.trim() : ""
-        }))
-        .filter((item) => QUESTION_TYPES.includes(item.type) && item.text.length > 0)
-        .map((item) => ({
-          ...item,
-          text: item.text.replace(/\s+/g, " ").slice(0, 220)
-        }))
-        .filter((item) => {
-          const key = item.text.toLowerCase();
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
+      Object.entries(groups)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .forEach(([movement, group]) => {
+          const section = document.createElement("div");
+          section.className = "movement-group";
+          section.innerHTML = `<h3>${movement}</h3>`;
+          const grid = document.createElement("div");
+          grid.className = "composer-grid";
+          group.forEach((composer) => {
+            const card = document.createElement("div");
+            card.className = "composer-card";
+            card.innerHTML = `
+              <strong>${composer.name}</strong>
+              <div class="summary-line">${composer.dates} • ${composer.nationality}</div>
+              <span class="tag">${composer.tendency}</span>
+            `;
+            card.addEventListener("click", () => openModal(composer));
+            grid.appendChild(card);
+          });
+          section.appendChild(grid);
+          viewContainer.appendChild(section);
         });
     };
 
-    const mergeQuestions = (primaryQuestions, count, style) => {
-      const llmBuckets = {
-        behavioral: shuffle(primaryQuestions.filter((q) => q.type === "behavioral")),
-        decomposition: shuffle(primaryQuestions.filter((q) => q.type === "decomposition")),
-        curveball: shuffle(primaryQuestions.filter((q) => q.type === "curveball"))
-      };
-      const fallbackBuckets = {
-        behavioral: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "behavioral")),
-        decomposition: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "decomposition")),
-        curveball: shuffle(SAMPLE_QUESTIONS.filter((q) => q.type === "curveball"))
-      };
-      const pattern = getMixPattern(style);
-      const session = [];
-      let patternIndex = 0;
-
-      while (session.length < count) {
-        const type = pattern[patternIndex % pattern.length];
-        const pool = llmBuckets[type].length ? llmBuckets[type] : fallbackBuckets[type];
-        if (pool.length === 0) {
-          const fallbackType = QUESTION_TYPES.find(
-            (t) => llmBuckets[t].length > 0 || fallbackBuckets[t].length > 0
-          );
-          if (!fallbackType) break;
-          const fallbackPool = llmBuckets[fallbackType].length
-            ? llmBuckets[fallbackType]
-            : fallbackBuckets[fallbackType];
-          session.push(fallbackPool.shift());
-        } else {
-          session.push(pool.shift());
-        }
-        patternIndex += 1;
+    const resourceIcon = (type) => {
+      switch (type) {
+        case "analysis":
+          return "📚";
+        case "interview":
+          return "🎙️";
+        case "score":
+          return "📄";
+        case "video":
+          return "🎬";
+        case "essay":
+          return "📝";
+        default:
+          return "🔗";
       }
-      return session;
     };
 
-    const callLLM = async (count) => {
-      const endpoint = elements.endpoint.value.trim();
-      const apiKey = elements.apiKey.value.trim();
-      const model = elements.model.value.trim() || "gpt-4o-mini";
+    const openModal = (composer) => {
+      modalName.textContent = composer.name;
+      modalMeta.textContent = `${composer.dates} • ${composer.nationality} • ${composer.movement}`;
+      modalDescription.textContent = composer.description;
 
-      if (!endpoint || !apiKey) {
-        throw new Error("LLM endpoint and API key are required.");
-      }
+      modalTags.innerHTML = `
+        <span class="tag">${composer.tendency}</span>
+        <span class="tag">Difficulty: ${composer.difficulty}</span>
+      `;
 
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model,
-          messages: [
-            { role: "system", content: "You are a precise interview-question generator." },
-            { role: "user", content: createPrompt(count) }
-          ],
-          temperature: 0.8
-        })
+      modalWorks.innerHTML = "";
+      composer.keyWorks.forEach((work) => {
+        const workEl = document.createElement("div");
+        workEl.className = "keywork";
+        workEl.innerHTML = `
+          <strong>${work.title}</strong> (${work.year})<br />
+          <span class="summary-line">Recommended: ${work.recommendedRecording || "TBD"}</span><br />
+          <a href="${work.spotify}" target="_blank" rel="noreferrer">Open on Spotify</a>
+        `;
+        modalWorks.appendChild(workEl);
       });
 
-      if (!response.ok) {
-        throw new Error(`LLM request failed: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const content = data.choices?.[0]?.message?.content;
-      const parsed = extractJsonArray(content);
-      return normalizeQuestions(parsed);
-    };
-
-    const scoreAnswer = (answer) => {
-      const wordCount = answer.trim().split(/\s+/).filter(Boolean).length;
-      const includesMetric = /metric|kpi|measure|quantify|data|signal/i.test(answer);
-      const includesStructure = /situation|task|action|result|impact|tradeoff|assumption/i.test(answer);
-      return {
-        wordCount,
-        includesMetric,
-        includesStructure
-      };
-    };
-
-    const buildFeedback = (answersSlice) => {
-      const stats = answersSlice.map(scoreAnswer);
-      const averageWords = Math.round(stats.reduce((acc, s) => acc + s.wordCount, 0) / stats.length || 0);
-      const metricsCount = stats.filter((s) => s.includesMetric).length;
-      const structureCount = stats.filter((s) => s.includesStructure).length;
-
-      const feedback = [];
-      feedback.push(`Average response length: ${averageWords} words.`);
-
-      if (metricsCount >= Math.ceil(stats.length / 2)) {
-        feedback.push("Good use of metrics and data language. Keep highlighting concrete signals.");
-      } else {
-        feedback.push("Add a clear metric, KPI, or signal in more answers to show data-driven thinking.");
-      }
-
-      if (structureCount >= Math.ceil(stats.length / 2)) {
-        feedback.push("Strong structure. Continue to frame responses with assumptions, trade-offs, or STAR elements.");
-      } else {
-        feedback.push("Try anchoring answers in a clear structure (Situation → Task → Action → Result). Add assumptions/trade-offs.");
-      }
-
-      feedback.push("Remember to clarify stakeholders and decision criteria in decomposition questions.");
-
-      return feedback;
-    };
-
-    const renderQuestion = () => {
-      const current = state.questions[state.currentIndex];
-      if (!current) return;
-      elements.progressText.textContent = `Question ${state.currentIndex + 1} of ${state.questions.length}`;
-      elements.categoryPill.textContent = TYPE_LABELS[current.type];
-      elements.questionText.textContent = current.text;
-      elements.answer.value = state.answers[state.currentIndex] || "";
-    };
-
-    const showCheckpointFeedback = () => {
-      const checkpointStart = state.currentIndex - 4;
-      const answersSlice = state.answers.slice(checkpointStart, state.currentIndex + 1);
-      const feedback = buildFeedback(answersSlice);
-      elements.checkpointFeedback.innerHTML = `
-        <h3>Checkpoint feedback</h3>
-        <ul>${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>
-      `;
-      elements.checkpointFeedback.classList.remove("hidden");
-    };
-
-    const renderSummary = () => {
-      const feedback = buildFeedback(state.answers);
-      elements.summaryFeedback.innerHTML = `
-        <h3>Overall feedback</h3>
-        <ul>${feedback.map((item) => `<li>${item}</li>`).join("")}</ul>
+      const influenceNames = (ids) => ids.map((id) => composerMap[id]?.name).filter(Boolean);
+      const influences = influenceNames(composer.influences);
+      const influenced = influenceNames(composer.influenced);
+      modalInfluence.innerHTML = `
+        <div class="summary-line"><strong>Influenced by:</strong> ${influences.length ? influences.join(", ") : "—"}</div>
+        <div class="summary-line" style="margin-top:6px;"><strong>Influenced:</strong> ${influenced.length ? influenced.join(", ") : "—"}</div>
       `;
 
-      elements.questionReview.innerHTML = state.questions
-        .map((q, idx) => `<li><strong>${TYPE_LABELS[q.type]}:</strong> ${q.text}<br /><em>Your answer:</em> ${state.answers[idx] || "(no response)"}</li>`)
-        .join("");
-    };
-
-    const startSession = async () => {
-      const count = Math.max(5, Math.min(30, Number(elements.questionCount.value) || 15));
-      elements.status.textContent = "";
-      elements.startBtn.disabled = true;
-      elements.resetBtn.disabled = false;
-      elements.checkpointFeedback.classList.add("hidden");
-      elements.summaryCard.classList.add("hidden");
-
-      try {
-        if (elements.useLLM.checked) {
-          elements.status.textContent = "Generating questions with LLM...";
-          const generated = await callLLM(count);
-          state.questions = mergeQuestions(generated, count, elements.mixStyle.value);
-          elements.status.textContent = `LLM questions generated (${generated.length} vetted).`;
-        } else {
-          state.questions = buildSession(count, elements.mixStyle.value);
-        }
-      } catch (error) {
-        elements.status.textContent = `LLM generation failed: ${error.message}. Falling back to sample set.`;
-        state.questions = buildSession(count, elements.mixStyle.value);
+      modalResources.innerHTML = "";
+      if (!composer.resources || composer.resources.length === 0) {
+        modalResources.innerHTML = `<div class="summary-line">No curated resources yet.</div>`;
+      } else {
+        composer.resources.forEach((resource) => {
+          const resourceEl = document.createElement("div");
+          resourceEl.className = "resource";
+          resourceEl.innerHTML = `
+            <div><strong>${resourceIcon(resource.type)} ${resource.title}</strong> <span class="summary-line">(${resource.type})</span></div>
+            <div class="summary-line">${resource.description}</div>
+            <a href="${resource.url}" target="_blank" rel="noreferrer">Open resource</a>
+          `;
+          modalResources.appendChild(resourceEl);
+        });
       }
 
-      state.answers = new Array(state.questions.length).fill("");
-      state.currentIndex = 0;
-      elements.interviewCard.classList.remove("hidden");
-      renderQuestion();
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
     };
 
-    const saveAnswer = () => {
-      state.answers[state.currentIndex] = elements.answer.value.trim();
+    const closeModalHandler = () => {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
     };
 
-    const nextQuestion = () => {
-      saveAnswer();
-      elements.checkpointFeedback.classList.add("hidden");
-
-      if ((state.currentIndex + 1) % 5 === 0) {
-        showCheckpointFeedback();
+    closeModal.addEventListener("click", closeModalHandler);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeModalHandler();
       }
+    });
 
-      if (state.currentIndex + 1 >= state.questions.length) {
-        elements.interviewCard.classList.add("hidden");
-        renderSummary();
-        elements.summaryCard.classList.remove("hidden");
-        elements.startBtn.disabled = false;
+    const renderView = () => {
+      viewContainer.innerHTML = "";
+      const composers = getFilteredComposers();
+      resultCount.textContent = `${composers.length} composers`;
+
+      if (composers.length === 0) {
+        const emptyState = document.createElement("div");
+        emptyState.className = "summary-line";
+        emptyState.textContent = "No composers found. Try adjusting your search or filters.";
+        viewContainer.appendChild(emptyState);
         return;
       }
 
-      state.currentIndex += 1;
-      renderQuestion();
+      if (state.view === "timeline") {
+        renderTimeline(composers);
+      } else if (state.view === "movement") {
+        renderByMovement(composers);
+      } else {
+        renderGrid(composers);
+      }
     };
 
-    const resetSession = () => {
-      state.questions = [];
-      state.answers = [];
-      state.currentIndex = 0;
-      elements.interviewCard.classList.add("hidden");
-      elements.summaryCard.classList.add("hidden");
-      elements.checkpointFeedback.classList.add("hidden");
-      elements.status.textContent = "";
-      elements.answer.value = "";
-      elements.startBtn.disabled = false;
-      elements.resetBtn.disabled = true;
-    };
+    document.querySelectorAll(".view-toggle button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".view-toggle button").forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+        state.view = button.dataset.view;
+        renderView();
+      });
+    });
 
-    elements.startBtn.addEventListener("click", startSession);
-    elements.resetBtn.addEventListener("click", resetSession);
-    elements.saveBtn.addEventListener("click", saveAnswer);
-    elements.nextBtn.addEventListener("click", nextQuestion);
+    searchInput.addEventListener("input", (event) => {
+      state.search = event.target.value.trim();
+      renderView();
+    });
+
+    movementFilter.addEventListener("change", (event) => {
+      state.movement = event.target.value;
+      renderView();
+    });
+
+    tendencyFilter.addEventListener("change", (event) => {
+      state.tendency = event.target.value;
+      renderView();
+    });
+
+    difficultyFilter.addEventListener("change", (event) => {
+      state.difficulty = event.target.value;
+      renderView();
+    });
+
+    renderView();
   </script>
 </body>
 </html>
